@@ -49,6 +49,20 @@ def process_coin():
     total += int(input("how many nickles?: ")) * 0.05
     total += int(input("how many pennies?: ")) * 0.01
     return total
+
+
+def is_transaction_successful(money_received, drink_cost):
+    """Return True when the payment is accepted, or False if money is insufficient"""
+    if money_received >= drink_cost:
+        change = round(money_received - drink_cost, 2)
+        global profit # profit is outside of this look. Need global to modify it
+        profit += drink_cost
+        return True
+    else:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
+
+
 # Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 # need to prompt user everytime they use
 # Turn off the Coffee Machine by entering “off” to the prompt
