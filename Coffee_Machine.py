@@ -55,6 +55,7 @@ def is_transaction_successful(money_received, drink_cost):
     """Return True when the payment is accepted, or False if money is insufficient"""
     if money_received >= drink_cost:
         change = round(money_received - drink_cost, 2)
+        print(f"Here is your ${change} in change")
         global profit # profit is outside of this look. Need global to modify it
         profit += drink_cost
         return True
@@ -66,7 +67,10 @@ def is_transaction_successful(money_received, drink_cost):
 # Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 # need to prompt user everytime they use
 # Turn off the Coffee Machine by entering “off” to the prompt
-
+def make_coffee(drink_name, order_ingredients):
+    for item in order_ingredients:
+        resources[item] -= order_ingredients[item]
+    print(f"Here is your {drink_name}☕")
 
 machine_on = True
 
@@ -82,7 +86,9 @@ while machine_on:
     else:
         drink = MENU[choice]
         if is_resource_sufficient(drink["ingredients"]):
-            process_coin()
+            payment = process_coin()
+            if is_transaction_successful(payment, drink["cost"]):
+                make_coffee(choice, drink["ingredients"])
 
 # get three hot flavors 1. espresso (50 ml water, 18g coffee) 2. latte (200 ml water, 24g coffee, 150 ml milk)
 # 3. Cappuccino (250 ml water, 24 g coffee, 100 ml milk)
